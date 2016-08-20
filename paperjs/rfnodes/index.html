@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>IoT Nodes</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="./paper-full.min.js"></script>
+    <script type="text/paperscript" canvas="canvas" > 
+	
+	
+	//--------------------------- Node ------------------------------------
+    function Node(pos,timeslot) {
+        this.radius = 35;
+        this.position = pos;
+		this.mouseEdit = false;
+		this.timeslot = timeslot;
+        this.path = new Path.Circle({
+									center: pos,
+									radius: 35,
+									fillColor:'blue'
+									});
+		this.field = new Path.Circle({
+									center: pos,
+									radius: 280,
+									fillColor:'#0088cc'
+									});
+		this.field.fillColor = {
+			gradient:{
+						stops: [	
+							[new Color(0,1,0), 0.1], 
+							[new Color(0,1,0,0.3), 0.8], 
+							[new Color(0,1,0,0.9), 0.9], 
+							[new Color(0,1,0,0.0), 1]],
+						//stops:[ ['blue',0.05], ['green',1] ],
+						radial: true
+						},
+			origin:pos,
+			destination:this.field.bounds.rightCenter
+		};
+		this.field.opacity = 0.3;
+    }
+
+    Node.prototype = {
+        moveTo: function(pos) {
+			this.position = pos;
+            this.path.position = pos;
+			this.field.position = pos;
+        },
+		onFrame: function(currentTimeSlot, relativeInSlot)
+		{
+			console.log(currentTimeSlot, relativeInSlot);
+			if(currentTimeSlot == this.timeslot)
+			{
+				console.log("Matching");
+				this.field.fillColor.gradient.stops = [	
+							[new Color(0,1,0), 0.1*relativeInSlot], 
+							[new Color(0,1,0,0.3), 0.7*relativeInSlot+0.1], 
+							[new Color(0,1,0,0.9), 0.8*relativeInSlot+0.1], 
+							[new Color(0,1,0,0.0), 0.9*relativeInSlot+0.1]];
+				this.field.opacity = 0.15;
+			}
+			else
+			{
+				this.field.fillColor.gradient.stops = [	
+							[new Color(0,1,0), 0.1], 
+							[new Color(0,1,0,0.3), 0.8], 
+							[new Color(0,1,0,0.9), 0.9], 
+							[new Color(0,1,0,0.0), 1]]
+				this.field.opacity = 0.0;
+			}
+		}
+    };
+
+	//--------------------------- Sequence ------------------------------------
+    function Sequence() {
+		this.Period = 3*1000;
+		this.timeslot = 1000;
+		this.currentTimeslot = 0;
+		var d = new Date();
+		this.start = d.getTime();
+    }
+	//--------------------------- Scene ------------------------------------
+    function Scene(nbNodes) {
+		this.w = view.size.width;
+		this.h = view.size.height;
+		this.c = new Point([view.size.width/2, view.size.height/2]);
+        this.Nodes = [];
+		this.NbNodes = nbNodes;
+		this.createNodes(nbNodes);
+		this.sequence = new Sequence();//in ms
+    }
+
+    Scene.prototype = 
+	{
+        createNodes: function() {
+			for (var i = 0; i < this.NbNodes; i++) {
+				var nodePos = new Point([Math.random() * this.w * 0.6 +this.h * 0.2, Math.random() * this.h * 0.6 + this.h * 0.2]);
+				
+				this.Nodes.push(new Node(nodePos,0));
+			}
+        }
+		,
+		randomiseNodesPositions: function(){
+			for (var i = 0; i < this.NbNodes; i++) 
+			{
+				var newpoint = new Point([Math.random() * this.w * 0.6 +this.h * 0.2, Math.random() * this.h * 0.6 + this.h * 0.2]);
+				this.Nodes[i].moveTo(newpoint);
+			}
+		}
+		,
+        mouseMove: function(event) {
+			for (var i = 0; i < this.NbNodes; i++) {
+				var dist = event.point - this.Nodes[i].position;
+				if(this.Nodes[i].mouseEdit)
+				{
+					this.Nodes[i].moveTo(event.point);
+				}
+			}
+        },
+		mouseDown: function(event){
+			var selectedOnce = false;
+			for (var i = 0; (i < this.NbNodes) &&(!selectedOnce); i++) {
+				var dist = event.point - this.Nodes[i].position;
+				if(dist.length <35)
+				{
+					this.Nodes[i].mouseEdit = true;
+					selectedOnce = true;//break the loop
+					
+				}
+				else
+				{
+					this.Nodes[i].mouseEdit = false;
+				}
+			}
+		},
+		mouseUp: function(event){
+			for (var i = 0; i < this.NbNodes; i++)
+				{
+					this.Nodes[i].mouseEdit = false;
+				}
+		},
+		onFrame: function(event){
+			var d = new Date();
+			var relativeTimeNow = (d.getTime() - this.sequence.start) % this.sequence.Period;
+			this.sequence.currentTimeslot = Math.trunc(relativeTimeNow / this.sequence.timeslot);
+			var relativeInSlot = (relativeTimeNow % this.sequence.timeslot)/this.sequence.timeslot;
+			//console.log(this.sequence.currentTimeslot,relativeInSlot);
+			for(var i = 0;i < this.NbNodes; i++)
+			{
+				this.Nodes[i].onFrame(this.sequence.currentTimeslot, relativeInSlot);
+			}
+		},
+		resize: function(){
+			this.w = view.size.width;
+			this.h = view.size.height;
+			this.c = new Point([view.size.width/2, view.size.height/2]);
+		}
+		
+    };
+	//--------------------------- Main ------------------------------------
+	
+var Home = new Scene(5);
+
+Home.Nodes[0].timeslot = 2;
+Home.Nodes[1].timeslot = 2;
+Home.Nodes[2].timeslot = 1;
+Home.Nodes[3].timeslot = 0;
+Home.Nodes[4].timeslot = 0;
+//var secondLayer = new Layer();
+//secondLayer.sendToBack();
+
+function onFrame(event) {
+	Home.onFrame(event);
+}
+
+function onMouseMove(event) {
+	Home.mouseMove(event);
+
+}
+
+function onMouseDown(event) {
+	Home.mouseDown(event);
+}
+
+function onMouseUp(event) {
+	Home.mouseUp(event);
+}
+
+function onKeyDown(event) {
+	if(event.key == 'r')
+	{
+		Home.randomiseNodesPositions();
+	}
+}
+
+// Reposition the path whenever the window is resized:
+function onResize(event) {
+	Home.resize();
+}
+	
+	</script>
+</head>
+
+<body>
+<p> 'r' to randomise the Nodes position, Drag with mouse from the blue centers.
+</p>
+    <canvas id="canvas" resize hidpi="off" style="background:white" width="600" height="500"></canvas>
+</body>
+</html>
+

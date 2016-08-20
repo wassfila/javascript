@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>pixi.js example 1</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #dbdbdb;
+		}
+		</style>
+    <script type="text/javascript" src="dat.gui.min.js"></script>
+    <script type="text/javascript" src="pixi.js"></script>
+    <script type="text/javascript" src="editor.js"></script>
+</head>
+<body>
+<!-- <body onresize="MyWindowResize()"> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+	<script type="text/javascript">
+
+    var w = window.innerWidth - 5;//bigger than this and the autoscroll would appear
+    var h = window.innerHeight - 5;
+	// create an new instance of a pixi stage
+    var stage = new PIXI.Container();
+	// create a renderer instance.
+	var renderer = PIXI.autoDetectRenderer(w, h);
+
+	// add the renderer view element to the DOM
+	document.body.appendChild(renderer.view);
+
+	requestAnimationFrame(animate);
+
+	createEditor(w, h);
+
+	function animate() {
+
+	    requestAnimationFrame(animate);
+
+	    renderer.render(stage);
+	}
+
+    /*var obj = { x: 5 };
+    var gui = new dat.GUI();
+	gui.add(obj, 'x');	
+        */
+
+	</script>
+
+	</body>
+</html>

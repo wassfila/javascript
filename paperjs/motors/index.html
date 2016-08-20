@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>IoT Nodes</title>
+    <link rel="stylesheet" href="style.css">
+	<script type="text/javascript" >
+	var Home = false;//will be intialised in rfmsch.js
+	</script>
+    <script type="text/javascript" src="./paper-full.min.js"></script>
+    <script type="text/paperscript" src="motor.js" canvas="canvas"> </script>
+    <script type="text/paperscript" canvas="canvas" > 
+	
+
+	
+	
+	//--------------------------- Main ------------------------------------
+	
+
+
+Home.Nodes[0].timeslot = 2;
+Home.Nodes[1].timeslot = 2;
+//var secondLayer = new Layer();
+//secondLayer.sendToBack();
+
+function onFrame(event) {
+	Home.onFrame(event);
+}
+
+function onMouseMove(event) {
+	Home.mouseMove(event);
+
+}
+
+function onMouseDown(event) {
+	Home.mouseDown(event);
+}
+
+function onMouseUp(event) {
+	Home.mouseUp(event);
+}
+
+function onKeyDown(event) {
+}
+
+// Reposition the path whenever the window is resized:
+function onResize(event) {
+	Home.resize();
+}
+
+	/*var c=document.getElementById("canvas");
+	var ctx=c.getContext("2d");
+	ctx.rect(0,0,800,600);
+	ctx.stroke();*/
+	</script>
+</head>
+
+<body>
+<p> Brushless DC Motor simulation in construction.
+</p>
+    <canvas id="canvas" hidpi="off" style="background:white" width="800" height="600" 	style="border:1px solid #000000;"></canvas>
+</body>
+</html>
+
