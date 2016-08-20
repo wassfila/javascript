@@ -23,7 +23,7 @@ You need a multi touch device to test the feature, otherwise mouse events can dr
 - [d3js graph parsed from json held in graph class](http://homesmartmesh.com/d3/graph/)
 Elements are draggable on the area, edges are updated to stick to nodes.
 
-##Pixi
+##Pixijs
 - [pixi sprites editor](http://homesmartmesh.com/pixi/)
 Click on the blue RF Node to add it to the scene, drag and drop the Noise and Obstacle from left panel to the scene (right side)
 
