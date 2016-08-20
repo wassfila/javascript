@@ -20,16 +20,23 @@ These demos are instanciations from the subdirectories of this repository, it is
 ##D3js
 ###[d3js multi touch drag example](http://homesmartmesh.com/d3/dragmulti/)
 You need a multi touch device to test the feature, otherwise mouse events can drag as well. The inconvenience here is the page flipping and the zooming effects that conflicts with the multi dragging.
-![dragmulti.png] (https://raw.githubusercontent.com/wassfila/javascript/master/d3/dragmulti/dragmulti.png)
+
+<img src="https://raw.githubusercontent.com/wassfila/javascript/master/d3/dragmulti/dragmulti.png" height="200">
 ###[d3js graph parsed from json held in graph class](http://homesmartmesh.com/d3/graph/)
 Elements are draggable on the area, edges are updated to stick to nodes.
 
+<img src="https://raw.githubusercontent.com/wassfila/javascript/master/d3/graph/graph.png" height="200">
 ##Pixijs
-- [pixi sprites editor](http://homesmartmesh.com/pixi/)
+###[pixi sprites editor](http://homesmartmesh.com/pixi/)
 Click on the blue RF Node to add it to the scene, drag and drop the Noise and Obstacle from left panel to the scene (right side)
 
+<img src="https://raw.githubusercontent.com/wassfila/javascript/master/pixi/pixi.png" height="200">
 ##Paperjs
-- [paperjs RF emission animation](http://homesmartmesh.com/paperjs/rfnodes/)
+###[paperjs RF emission animation](http://homesmartmesh.com/paperjs/rfnodes/)
 Press 'r' to randomise the RF nodes position, Nodes are draggable with the mouse
-- [paperjs Brushless DC motor animation](http://homesmartmesh.com/paperjs/motors/)
+
+<img src="https://raw.githubusercontent.com/wassfila/javascript/master/paperjs/rfnodes/rfnodes.png" height="200">
+###[paperjs Brushless DC motor animation](http://homesmartmesh.com/paperjs/motors/)
 very basic, only stator and magnet animation. It's an outrunner.
+
+<img src="https://raw.githubusercontent.com/wassfila/javascript/master/paperjs/motors/motors.png" height="200">
