@@ -19,4 +19,3 @@ These demos are instanciations from the subdirectories of this repository, it is
 ##D3js
 - [d3js multi touch drag example](http://homesmartmesh.com/d3/dragmulti/)
 - [d3js graph parsed from json held in graph class](http://homesmartmesh.com/d3/graph/)
-- 
