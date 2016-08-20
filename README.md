@@ -18,9 +18,10 @@ the vector graphics here go linked to data arrays, the smart thing is that the s
 These demos are instanciations from the subdirectories of this repository, it is possible to reproduce the same by copying the content under a webserver's www directory.
 
 ##D3js
-- [d3js multi touch drag example](http://homesmartmesh.com/d3/dragmulti/)
+###[d3js multi touch drag example](http://homesmartmesh.com/d3/dragmulti/)
 You need a multi touch device to test the feature, otherwise mouse events can drag as well. The inconvenience here is the page flipping and the zooming effects that conflicts with the multi dragging.
-- [d3js graph parsed from json held in graph class](http://homesmartmesh.com/d3/graph/)
+![dragmulti.png] (https://raw.githubusercontent.com/wassfila/javascript/master/d3/dragmulti/dragmulti.png)
+###[d3js graph parsed from json held in graph class](http://homesmartmesh.com/d3/graph/)
 Elements are draggable on the area, edges are updated to stick to nodes.
 
 ##Pixijs
